@@ -11,7 +11,7 @@ Chapter 2 프로그래밍기초 개인과제
  - 이성대 -
 
 ## 개발 환경
- - Visual Studio Community 2022
+ - Visual Studio Community 2022 C#
 
 ## 중요 기능
  - 캐릭터 정보
