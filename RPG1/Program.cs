@@ -82,8 +82,7 @@ namespace RPG1
             Console.Clear();
             Console.WriteLine("인벤토리");
             Console.WriteLine("보유 중인 아이템을 관리할 수 있습니다.\n");
-
-            Console.WriteLine(" - {0}{1}     | {2} +{3} | {4} ");
+            Console.WriteLine("아이템 배열 필요");
             Console.WriteLine();
             Console.WriteLine("1. 장착 관리");
             Console.WriteLine("0. 나가기\n");
@@ -107,7 +106,22 @@ namespace RPG1
         // 장착 관리 미완성
         static void CheckEquipment()
         {
-            Inventory();
+            Console.Clear();
+            Console.WriteLine("인벤토리 - 장착 관리");
+            Console.WriteLine("보유 중인 아이템을 관리할 수 있습니다.\n");
+            Console.WriteLine("아이템 배열 필요");
+            Console.WriteLine();
+            Console.WriteLine("0. 나가기\n");
+            Console.WriteLine("원하시는 행동을 입력해주세요.");
+            Console.Write(">> ");
+
+            int input = Choice(0, 0); // 배열 값에 따라 변경
+            switch (input)
+            {
+                case 0:
+                    Inventory();
+                    break;
+            }
         }
 
 
