@@ -103,9 +103,11 @@ namespace RPG1
 
 
         }
+
+        // 장착 관리 미완성
         static void CheckEquipment()
         {
-
+            Inventory();
         }
 
 
@@ -129,6 +131,8 @@ namespace RPG1
             }
         }
     }
+
+    //캐릭터 스텟 설정
     public class Character
     {
         public string Name { get; }
@@ -150,6 +154,8 @@ namespace RPG1
             Gold = gold;
         }
     }
+
+    //아이템 설정
     public class Item
     {
         public int Index { get; set; }
