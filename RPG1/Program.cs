@@ -59,15 +59,10 @@ namespace RPG1
             Equip = equip;
         }
 
-<<<<<<< HEAD
-
-        //인벤토리에 있는 아이템 표기
-=======
->>>>>>> parent of 8567f74 (ver.0.14)
         public void PrintItems(bool withNumber = false, int index = 0)
         {
             Console.Write("- ");
-            if(withNumber)
+            if (withNumber)
             {
                 Console.ForegroundColor = ConsoleColor.DarkMagenta;
                 Console.Write("{0}. ", index);
@@ -94,7 +89,7 @@ namespace RPG1
             Console.WriteLine(ItemEp);
         }
     }
-    
+
 
     internal class Program
     {
@@ -116,9 +111,9 @@ namespace RPG1
 
             // 아이템 정보 세팅: 인덱스, 이름, 타입, 공격력, 방어력, 체력, 가격, 설명, 장착여부
             // 리스트 변경 개선 사항
-            List<Item> items = new List<Item>();
-            items.Add(new Item(0, "무쇠갑옷", 0, 0, 5, 0, 200, "무쇠로 만들어져 튼튼한 갑옷입니다."));
-            items.Add(new Item(1, "낡은 검", 1, 2, 0, 0, 100, "쉽게 볼 수 있는 낡은 검 입니다."));
+            items = new Item[10];
+            AddItem(new Item(0, "무쇠갑옷", 0, 0, 5, 0, 200, "무쇠로 만들어져 튼튼한 갑옷입니다."));
+            AddItem(new Item(1, "낡은 검", 1, 2, 0, 0, 100, "쉽게 볼 수 있는 낡은 검 입니다."));
         }
 
         // 인벤토리 개수 (지금은 10개 까지만)
@@ -128,7 +123,7 @@ namespace RPG1
             Item.itemCon++;
         }
 
-        
+
 
         // 시작 마을
         static void StartVillage()
@@ -163,22 +158,19 @@ namespace RPG1
             HiglightText1("-------------------------------------------------------");
             HiglightText1("             캐릭터의 정보가 표시됩니다.");
             HiglightText1("-------------------------------------------------------");
-            HiglightText2("Lv. ", player.Level.ToString("00"),"");
+            HiglightText2("Lv. ", player.Level.ToString("00"), "");
             Console.WriteLine("{0} ( {1} )", player.Name, player.Job);
-<<<<<<< HEAD
 
             //장착 장비에 따른 스텟 추가
-            
-            getSumBonusStatus();
-            HiglightText2("공격력 : ",player.Atk.ToString(), "");
-            //HiglightText2("방어력 : ", (player.Def + BonusDef).ToString(), BonusDef > 0 ? string.Format("(+{0})", BonusDef) : "");
-            //HiglightText2("체 력 : ", (player.Hp + BonusHp).ToString(), BonusHp > 0 ? string.Format("(+{0})", BonusHp) : "");
-=======
-            HiglightText2("공격력 : ", player.Atk.ToString(),"");
-            HiglightText2("방어력 : ", player.Def.ToString(),"");
-            HiglightText2("체 력 : ", player.Hp.ToString(),"");
->>>>>>> parent of 8567f74 (ver.0.14)
-            HiglightText2("Gold : ", player.Gold.ToString(),"G");
+
+            int BonusAtk = getSumBonusAtk();
+            int BonusDef = getSumBonusDef();
+            int BonusHp = getSumBonusHp();
+
+            HiglightText2("공격력 : ", (player.Atk + BonusAtk).ToString(), BonusAtk > 0 ? string.Format("(+{0})", BonusAtk) : "");
+            HiglightText2("방어력 : ", (player.Def + BonusDef).ToString(), BonusDef > 0 ? string.Format("(+{0})", BonusDef) : "");
+            HiglightText2("체 력 : ", (player.Hp + BonusHp).ToString(), BonusHp > 0 ? string.Format("(+{0})", BonusHp) : "");
+            HiglightText2("Gold : ", player.Gold.ToString(), "G");
             Console.WriteLine();
             Console.WriteLine("0. 나가기");
             Console.WriteLine();
@@ -194,23 +186,45 @@ namespace RPG1
             }
         }
 
-<<<<<<< HEAD
         // 아이템 장착에 따른 보너스 스텟
-       private static void getSumBonusStatus()
+        private static int getSumBonusAtk()
         {
+            int sum = 0;
             for (int i = 0; i < Item.itemCon; i++)
             {
                 if (items[i].Equip)
                 {
-                   
-                   
+                    sum += items[i].Atk;
                 }
             }
+            return sum;
         }
-        
+        private static int getSumBonusDef()
+        {
+            int sum = 0;
+            for (int i = 0; i < Item.itemCon; i++)
+            {
+                if (items[i].Equip)
+                {
+                    sum += items[i].Def;
+                }
+            }
+            return sum;
+        }
+        private static int getSumBonusHp()
+        {
+            int sum = 0;
+            for (int i = 0; i < Item.itemCon; i++)
+            {
+                if (items[i].Equip)
+                {
+                    sum += items[i].Hp;
+                }
+            }
+            return sum;
+        }
 
-=======
->>>>>>> parent of 8567f74 (ver.0.14)
+
         //플레이어 인벤토리
         static void Inventory()
         {
@@ -243,10 +257,6 @@ namespace RPG1
             }
         }
 
-<<<<<<< HEAD
-=======
-        // 장착 관리 미완성
->>>>>>> parent of 8567f74 (ver.0.14)
         static void CheckEquipment()
         {
             Console.Clear();
@@ -257,7 +267,7 @@ namespace RPG1
             Console.WriteLine("[아이템 목록]");
             for (int i = 0; i < Item.itemCon; i++)
             {
-                items[i].PrintItems(true, i+1);
+                items[i].PrintItems(true, i + 1);
             }
             Console.WriteLine();
             Console.WriteLine("0. 나가기");
@@ -278,9 +288,9 @@ namespace RPG1
             }
         }
 
-        private static void ItemEquip(int v)
+        private static void ItemEquip(int index)
         {
-            
+            items[index].Equip = !items[index].Equip;
         }
 
         // 플레이어 숫자 고르기
@@ -302,8 +312,6 @@ namespace RPG1
             }
         }
 
-        
-
         //문자 컬러
         private static void HiglightText1(string text)
         {
@@ -314,7 +322,7 @@ namespace RPG1
         private static void HiglightText2(string s1, string s2, string s3)
         {
             Console.Write(s1);
-            Console.ForegroundColor= ConsoleColor.Yellow;
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.Write(s2);
             Console.ResetColor();
             Console.WriteLine(s3);
