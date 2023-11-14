@@ -81,15 +81,14 @@ namespace RPG1
             Console.Write(" | ");
 
             //사망연산자 문법 (Atk >= 0? "+" : "")  조건? 조건이 참이라면 "+"를 출력 : 아니라면 "" 출력
-            if (Atk != 0) Console.Write($"공격력 {(Atk >= 0 ? "+" : "")}{Atk}");
-            if (Def != 0) Console.Write($"방어력 {(Def >= 0 ? "+" : "")}{Def}");
-            if (Hp != 0) Console.Write($"체력 {(Hp >= 0 ? "+" : "")}{Hp}");
+            if (Atk != 0) Console.Write($"공격력 {(Atk >= 0 ? "+" : "")} {Atk}");
+            if (Def != 0) Console.Write($"방어력 {(Def >= 0 ? "+" : "")} {Def}");
+            if (Hp != 0) Console.Write($"체력 {(Hp >= 0 ? "+" : "")} {Hp}");
 
             Console.Write(" | ");
             Console.WriteLine(ItemEp);
         }
     }
-
 
     internal class Program
     {
@@ -111,19 +110,17 @@ namespace RPG1
 
             // 아이템 정보 세팅: 인덱스, 이름, 타입, 공격력, 방어력, 체력, 가격, 설명, 장착여부
             // 리스트 변경 개선 사항
+            // 인벤토리 개수 (지금은 10개 까지만)
             items = new Item[10];
             AddItem(new Item(0, "무쇠갑옷", 0, 0, 5, 0, 200, "무쇠로 만들어져 튼튼한 갑옷입니다."));
             AddItem(new Item(1, "낡은 검", 1, 2, 0, 0, 100, "쉽게 볼 수 있는 낡은 검 입니다."));
+            AddItem(new Item(2, "나무 방패", 3, 0, 2, 0, 50, "보기보다 튼튼합니다."));
         }
-
-        // 인벤토리 개수 (지금은 10개 까지만)
         static void AddItem(Item item)
         {
             items[Item.itemCon] = item;
             Item.itemCon++;
         }
-
-
 
         // 시작 마을
         static void StartVillage()
@@ -167,9 +164,9 @@ namespace RPG1
             int BonusDef = getSumBonusDef();
             int BonusHp = getSumBonusHp();
 
-            HiglightText2("공격력 : ", (player.Atk + BonusAtk).ToString(), BonusAtk > 0 ? string.Format("(+{0})", BonusAtk) : "");
-            HiglightText2("방어력 : ", (player.Def + BonusDef).ToString(), BonusDef > 0 ? string.Format("(+{0})", BonusDef) : "");
-            HiglightText2("체 력 : ", (player.Hp + BonusHp).ToString(), BonusHp > 0 ? string.Format("(+{0})", BonusHp) : "");
+            HiglightText2("공격력 : ", (player.Atk + BonusAtk).ToString(), BonusAtk > 0 ? string.Format(" (+{0})", BonusAtk) : "");
+            HiglightText2("방어력 : ", (player.Def + BonusDef).ToString(), BonusDef > 0 ? string.Format(" (+{0})", BonusDef) : "");
+            HiglightText2("체 력 : ", (player.Hp + BonusHp).ToString(), BonusHp > 0 ? string.Format(" (+{0})", BonusHp) : "");
             HiglightText2("Gold : ", player.Gold.ToString(), "G");
             Console.WriteLine();
             Console.WriteLine("0. 나가기");
@@ -327,7 +324,6 @@ namespace RPG1
             Console.ResetColor();
             Console.WriteLine(s3);
         }
-
 
         //스타트 로고
         private static void StartLogo()
