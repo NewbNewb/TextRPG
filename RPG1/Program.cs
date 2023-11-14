@@ -121,15 +121,16 @@ namespace RPG1
         static void Status()
         {
             Console.Clear();
-            Console.WriteLine("-------------------------------------------------------");
-            Console.WriteLine("             캐릭터의 정보가 표시됩니다.");
-            Console.WriteLine("-------------------------------------------------------");
-            Console.WriteLine("Lv. {0}", player.Level.ToString(00));
+            HiglightText1("■상태 보기■");
+            HiglightText1("-------------------------------------------------------");
+            HiglightText1("             캐릭터의 정보가 표시됩니다.");
+            HiglightText1("-------------------------------------------------------");
+            HiglightText2("Lv. ", player.Level.ToString("00"),"");
             Console.WriteLine("{0} ( {1} )", player.Name, player.Job);
-            Console.WriteLine("공격력 : {0}", player.Atk.ToString(00));
-            Console.WriteLine("방어력 : {0}", player.Def.ToString(00));
-            Console.WriteLine("체 력 : {0}", player.Hp.ToString(00));
-            Console.WriteLine("Gold : {0}G", player.Gold.ToString(00));
+            HiglightText2("공격력 : ", player.Atk.ToString(),"");
+            HiglightText2("방어력 : ", player.Def.ToString(),"");
+            HiglightText2("체 력 : ", player.Hp.ToString(),"");
+            HiglightText2("Gold : ", player.Gold.ToString(),"G");
             Console.WriteLine();
             Console.WriteLine("0. 나가기");
             Console.WriteLine();
@@ -218,22 +219,39 @@ namespace RPG1
             }
         }
 
-        //스타트 로고
-        static void StartLogo()
+        //문자 컬러
+        private static void HiglightText1(string text)
         {
-            Console.WriteLine("   ____                   _                 ");
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine(text);
+            Console.ResetColor();
+        }
+        private static void HiglightText2(string s1, string s2, string s3)
+        {
+            Console.Write(s1);
+            Console.ForegroundColor= ConsoleColor.Yellow;
+            Console.Write(s2);
+            Console.ResetColor();
+            Console.WriteLine(s3);
+        }
+
+
+        //스타트 로고
+        private static void StartLogo()
+        {
+            Console.WriteLine("   ____                   _                   ");
             Console.WriteLine("  / ___| ___    __ _ _ __| |_   __ _          ");
             Console.WriteLine("  ＼___ |  _＼ / _` | '__| __| / _` |         ");
             Console.WriteLine("   ___) | |_) | (_| | |  | |_ | (_| |         ");
             Console.WriteLine("  |____/|  __/ ＼___|_|   ＼_| ＼_,_|         ");
-            Console.WriteLine("  |  _＼|_|  _ _ __   __ _  ___   ___   ____");
+            Console.WriteLine("  |  _＼|_|  _ _ __   __ _  ___   ___   ____  ");
             Console.WriteLine("  | | | | | | | '_ ＼/ _` |/ _ ＼/ _ ＼| '_ ＼");
             Console.WriteLine("  | |_| | |_| | | | | (_| |  ___/ (_)  | | | |");
             Console.WriteLine("  |____/ ＼_,_|_| |_|＼__,|＼___|＼___/|_| |_|");
-            Console.WriteLine("                      |___/                  ");
+            Console.WriteLine("                      |___/                   ");
             Console.WriteLine("    ________________________________________  ");
-            Console.WriteLine("   |   Press any button to start the game   |");
-            Console.WriteLine("   |________________________________________|");
+            Console.WriteLine("   |   Press any button to start the game   | ");
+            Console.WriteLine("   |________________________________________| ");
             Console.ReadKey();
         }
     }
