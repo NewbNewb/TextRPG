@@ -59,8 +59,11 @@ namespace RPG1
             Equip = equip;
         }
 
+<<<<<<< HEAD
 
         //인벤토리에 있는 아이템 표기
+=======
+>>>>>>> parent of 8567f74 (ver.0.14)
         public void PrintItems(bool withNumber = false, int index = 0)
         {
             Console.Write("- ");
@@ -81,10 +84,12 @@ namespace RPG1
             }
             Console.Write(Name);
             Console.Write(" | ");
+
             //사망연산자 문법 (Atk >= 0? "+" : "")  조건? 조건이 참이라면 "+"를 출력 : 아니라면 "" 출력
             if (Atk != 0) Console.Write($"공격력 {(Atk >= 0 ? "+" : "")}{Atk}");
             if (Def != 0) Console.Write($"방어력 {(Def >= 0 ? "+" : "")}{Def}");
             if (Hp != 0) Console.Write($"체력 {(Hp >= 0 ? "+" : "")}{Hp}");
+
             Console.Write(" | ");
             Console.WriteLine(ItemEp);
         }
@@ -160,6 +165,7 @@ namespace RPG1
             HiglightText1("-------------------------------------------------------");
             HiglightText2("Lv. ", player.Level.ToString("00"),"");
             Console.WriteLine("{0} ( {1} )", player.Name, player.Job);
+<<<<<<< HEAD
 
             //장착 장비에 따른 스텟 추가
             
@@ -167,6 +173,11 @@ namespace RPG1
             HiglightText2("공격력 : ",player.Atk.ToString(), "");
             //HiglightText2("방어력 : ", (player.Def + BonusDef).ToString(), BonusDef > 0 ? string.Format("(+{0})", BonusDef) : "");
             //HiglightText2("체 력 : ", (player.Hp + BonusHp).ToString(), BonusHp > 0 ? string.Format("(+{0})", BonusHp) : "");
+=======
+            HiglightText2("공격력 : ", player.Atk.ToString(),"");
+            HiglightText2("방어력 : ", player.Def.ToString(),"");
+            HiglightText2("체 력 : ", player.Hp.ToString(),"");
+>>>>>>> parent of 8567f74 (ver.0.14)
             HiglightText2("Gold : ", player.Gold.ToString(),"G");
             Console.WriteLine();
             Console.WriteLine("0. 나가기");
@@ -183,6 +194,7 @@ namespace RPG1
             }
         }
 
+<<<<<<< HEAD
         // 아이템 장착에 따른 보너스 스텟
        private static void getSumBonusStatus()
         {
@@ -197,6 +209,8 @@ namespace RPG1
         }
         
 
+=======
+>>>>>>> parent of 8567f74 (ver.0.14)
         //플레이어 인벤토리
         static void Inventory()
         {
@@ -229,6 +243,10 @@ namespace RPG1
             }
         }
 
+<<<<<<< HEAD
+=======
+        // 장착 관리 미완성
+>>>>>>> parent of 8567f74 (ver.0.14)
         static void CheckEquipment()
         {
             Console.Clear();
