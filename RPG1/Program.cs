@@ -63,7 +63,6 @@ namespace RPG1
         //인벤토리에 있는 아이템 표기
         public void PrintItems(bool withNumber = false, int index = 0)
         {
-            //아이템 개수, 개수에 따른 숫자 변경
             Console.Write("- ");
             if(withNumber)
             {
@@ -72,7 +71,6 @@ namespace RPG1
                 Console.ResetColor();
             }
 
-            //아이템 장착 여부
             if (Equip)
             {
                 Console.Write("[");
@@ -81,7 +79,6 @@ namespace RPG1
                 Console.ResetColor();
                 Console.Write("]");
             }
-            //아이템 이름 출력
             Console.Write(Name);
             Console.Write(" | ");
             //사망연산자 문법 (Atk >= 0? "+" : "")  조건? 조건이 참이라면 "+"를 출력 : 아니라면 "" 출력
@@ -89,7 +86,6 @@ namespace RPG1
             if (Def != 0) Console.Write($"방어력 {(Def >= 0 ? "+" : "")}{Def}");
             if (Hp != 0) Console.Write($"체력 {(Hp >= 0 ? "+" : "")}{Hp}");
             Console.Write(" | ");
-            //아이템 설명 출력
             Console.WriteLine(ItemEp);
         }
     }
@@ -233,7 +229,6 @@ namespace RPG1
             }
         }
 
-        // 장착 관리
         static void CheckEquipment()
         {
             Console.Clear();
@@ -264,10 +259,10 @@ namespace RPG1
                     break;
             }
         }
-        // 아이템 장착 상태 변경
-        private static void ItemEquip(int index)
+
+        private static void ItemEquip(int v)
         {
-            items[index].Equip = !items[index].Equip;
+            
         }
 
         // 플레이어 숫자 고르기
@@ -289,6 +284,8 @@ namespace RPG1
             }
         }
 
+        
+
         //문자 컬러
         private static void HiglightText1(string text)
         {
@@ -304,6 +301,7 @@ namespace RPG1
             Console.ResetColor();
             Console.WriteLine(s3);
         }
+
 
         //스타트 로고
         private static void StartLogo()
