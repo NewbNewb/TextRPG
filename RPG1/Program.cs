@@ -58,8 +58,10 @@ namespace RPG1
             Equip = equip;
         }
 
+        //인벤토리에 있는 아이템 표기
         public void PrintItems(bool withNumber = false, int index = 0)
         {
+            //아이템 개수, 개수에 따른 숫자 변경
             Console.Write("- ");
             if(withNumber)
             {
@@ -68,6 +70,7 @@ namespace RPG1
                 Console.ResetColor();
             }
 
+            //아이템 장착 여부
             if (Equip)
             {
                 Console.Write("[");
@@ -76,15 +79,15 @@ namespace RPG1
                 Console.ResetColor();
                 Console.Write("]");
             }
+            //아이템 이름 출력
             Console.Write(Name);
             Console.Write(" | ");
-
             //사망연산자 문법 (Atk >= 0? "+" : "")  조건? 조건이 참이라면 "+"를 출력 : 아니라면 "" 출력
             if (Atk != 0) Console.Write($"공격력 {(Atk >= 0 ? "+" : "")}{Atk}");
             if (Def != 0) Console.Write($"방어력 {(Def >= 0 ? "+" : "")}{Def}");
             if (Hp != 0) Console.Write($"체력 {(Hp >= 0 ? "+" : "")}{Hp}");
-
             Console.Write(" | ");
+            //아이템 설명 출력
             Console.WriteLine(ItemEp);
         }
     }
@@ -159,9 +162,14 @@ namespace RPG1
             HiglightText1("-------------------------------------------------------");
             HiglightText2("Lv. ", player.Level.ToString("00"),"");
             Console.WriteLine("{0} ( {1} )", player.Name, player.Job);
-            HiglightText2("공격력 : ", player.Atk.ToString(),"");
-            HiglightText2("방어력 : ", player.Def.ToString(),"");
-            HiglightText2("체 력 : ", player.Hp.ToString(),"");
+
+            //장착 장비에 따른 스텟 추가
+            int BonusAtk = getSumBonusAtk();
+            int BonusDef = getSumBonusDef();
+            int BonusHp = getSumBonusHp();
+            HiglightText2("공격력 : ", (player.Atk + BonusAtk).ToString(),BonusAtk > 0? string.Format("(+{0})",BonusAtk) : "");
+            HiglightText2("방어력 : ", (player.Def + BonusDef).ToString(), BonusDef > 0 ? string.Format("(+{0})", BonusDef) : "");
+            HiglightText2("체 력 : ", (player.Hp + BonusHp).ToString(), BonusHp > 0 ? string.Format("(+{0})", BonusHp) : "");
             HiglightText2("Gold : ", player.Gold.ToString(),"G");
             Console.WriteLine();
             Console.WriteLine("0. 나가기");
@@ -176,6 +184,44 @@ namespace RPG1
                     StartVillage();
                     break;
             }
+        }
+
+        // 아이템 장착에 따른 보너스 스텟
+       private static int getSumBonusAtk()
+        {
+            int sum = 0;
+            for (int i = 0; i < Item.itemCon; i++)
+            {
+                if (items[i].Equip)
+                {
+                    sum += items[i].Atk;
+                }
+            }
+            return sum;
+        }
+        private static int getSumBonusDef()
+        {
+            int sum = 0;
+            for (int i = 0; i < Item.itemCon; i++)
+            {
+                if (items[i].Equip)
+                {
+                    sum += items[i].Def;
+                }
+            }
+            return sum;
+        }
+        private static int getSumBonusHp()
+        {
+            int sum = 0;
+            for (int i = 0; i < Item.itemCon; i++)
+            {
+                if (items[i].Equip)
+                {
+                    sum += items[i].Hp;
+                }
+            }
+            return sum;
         }
 
         //플레이어 인벤토리
@@ -210,7 +256,7 @@ namespace RPG1
             }
         }
 
-        // 장착 관리 미완성
+        // 장착 관리
         static void CheckEquipment()
         {
             Console.Clear();
@@ -241,10 +287,10 @@ namespace RPG1
                     break;
             }
         }
-
-        private static void ItemEquip(int v)
+        // 아이템 장착 상태 변경
+        private static void ItemEquip(int index)
         {
-            
+            items[index].Equip = !items[index].Equip;
         }
 
         // 플레이어 숫자 고르기
@@ -266,8 +312,6 @@ namespace RPG1
             }
         }
 
-        
-
         //문자 컬러
         private static void HiglightText1(string text)
         {
@@ -283,7 +327,6 @@ namespace RPG1
             Console.ResetColor();
             Console.WriteLine(s3);
         }
-
 
         //스타트 로고
         private static void StartLogo()
