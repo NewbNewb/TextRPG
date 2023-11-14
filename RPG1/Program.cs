@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.ComponentModel;
+using System.Diagnostics;
 using System.Numerics;
 using System.Reflection.Emit;
 using System.Xml.Linq;
@@ -42,7 +43,7 @@ namespace RPG1
         public int Price { get; }
         public bool Equip { get; set; }
 
-        public static int ItemCon = 0;
+        public static int itemCon = 0;
 
         public Item(int index, string name, int type, int atk, int def, int hp, int price, string itemEp, bool equip = false)
         {
@@ -56,7 +57,39 @@ namespace RPG1
             Price = price;
             Equip = equip;
         }
+
+        public void PrintItems(bool withNumber = false, int index = 0)
+        {
+            Console.Write("- ");
+            if(withNumber)
+            {
+                Console.ForegroundColor = ConsoleColor.DarkMagenta;
+                Console.Write("{0}. ", index);
+                Console.ResetColor();
+            }
+
+            if (Equip)
+            {
+                Console.Write("[");
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.Write("E");
+                Console.ResetColor();
+                Console.Write("]");
+            }
+            Console.Write(Name);
+            Console.Write(" | ");
+
+            //사망연산자 문법 (Atk >= 0? "+" : "")  조건? 조건이 참이라면 "+"를 출력 : 아니라면 "" 출력
+            if (Atk != 0) Console.Write($"공격력 {(Atk >= 0 ? "+" : "")}{Atk}");
+            if (Def != 0) Console.Write($"방어력 {(Def >= 0 ? "+" : "")}{Def}");
+            if (Hp != 0) Console.Write($"체력 {(Hp >= 0 ? "+" : "")}{Hp}");
+
+            Console.Write(" | ");
+            Console.WriteLine(ItemEp);
+        }
     }
+    
+
     internal class Program
     {
         private static Character player;
@@ -84,9 +117,9 @@ namespace RPG1
         // 인벤토리 개수 (지금은 10개 까지만)
         static void AddItem(Item item)
         {
-            if (Item.ItemCon == 10) return;
-            items[Item.ItemCon] = item;
-            Item.ItemCon++;
+            if (Item.itemCon == 10) return;
+            items[Item.itemCon] = item;
+            Item.itemCon++;
         }
 
         
@@ -121,7 +154,6 @@ namespace RPG1
         static void Status()
         {
             Console.Clear();
-            HiglightText1("■상태 보기■");
             HiglightText1("-------------------------------------------------------");
             HiglightText1("             캐릭터의 정보가 표시됩니다.");
             HiglightText1("-------------------------------------------------------");
@@ -150,11 +182,15 @@ namespace RPG1
         static void Inventory()
         {
             Console.Clear();
-            Console.WriteLine("-------------------------------------------------------");
-            Console.WriteLine("                       인벤토리");
-            Console.WriteLine("         보유 중인 아이템을 관리할 수 있습니다.");
-            Console.WriteLine("-------------------------------------------------------");
-            Console.WriteLine("아이템 배열 필요");
+            HiglightText1("-------------------------------------------------------");
+            HiglightText1("                       인벤토리");
+            HiglightText1("         보유 중인 아이템을 관리할 수 있습니다.");
+            HiglightText1("-------------------------------------------------------");
+            Console.WriteLine("[아이템 목록]");
+            for (int i = 0; i < Item.itemCon; i++)
+            {
+                items[i].PrintItems();
+            }
             Console.WriteLine();
             Console.WriteLine("1. 장착 관리");
             Console.WriteLine("0. 나가기");
@@ -172,32 +208,43 @@ namespace RPG1
                     CheckEquipment();
                     break;
             }
-
-
         }
 
         // 장착 관리 미완성
         static void CheckEquipment()
         {
             Console.Clear();
-            Console.WriteLine("-------------------------------------------------------");
-            Console.WriteLine("                 인벤토리 - 장착 관리");
-            Console.WriteLine("        보유 중인 아이템을 관리할 수 있습니다.");
-            Console.WriteLine("-------------------------------------------------------");
-            Console.WriteLine("아이템 배열 필요");
+            HiglightText1("-------------------------------------------------------");
+            HiglightText1("                 인벤토리 - 장착 관리");
+            HiglightText1("        보유 중인 아이템을 관리할 수 있습니다.");
+            HiglightText1("-------------------------------------------------------");
+            Console.WriteLine("[아이템 목록]");
+            for (int i = 0; i < Item.itemCon; i++)
+            {
+                items[i].PrintItems(true, i+1);
+            }
             Console.WriteLine();
             Console.WriteLine("0. 나가기");
             Console.WriteLine();
             Console.WriteLine("원하시는 행동을 입력해주세요.");
             Console.Write(">> ");
 
-            int input = Choice(0, 0); // 배열 값에 따라 변경
+            int input = Choice(0, Item.itemCon); // 배열 값에 따라 변경
             switch (input)
             {
                 case 0:
                     Inventory();
                     break;
+                default:
+                    ItemEquip(input - 1);
+                    CheckEquipment();
+                    break;
             }
+        }
+
+        private static void ItemEquip(int v)
+        {
+            
         }
 
         // 플레이어 숫자 고르기
@@ -218,6 +265,8 @@ namespace RPG1
                 Console.Write(">> ");
             }
         }
+
+        
 
         //문자 컬러
         private static void HiglightText1(string text)
